@@ -4,7 +4,9 @@
                 <img src="{{ post.author.avatar(36) }}">
             </td>
             <td>
-                {{ post.author.username}}说：<br>
+                <a href="{{ url_for('user', username=post.author.username) }}">
+                    {{ post.author.username}}
+                </a>说：<br>
                 {{ post.body }}
             </td>
         </tr>
