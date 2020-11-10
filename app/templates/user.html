@@ -16,10 +16,27 @@
                 {% if user.last_seen %}
                 <p>最近登陆：{{user.last_seen}}</p>
                 {% endif %}
+                <p>
+                    你有{{user.followers.count()}}个关注者，关注了{{user.followed.count()}}人。
+                </p>
                 {% if current_user == user %}
                 <a href="{{ url_for('edit_profile') }}">
                     编辑个人资料
                 </a>
+                {% elif not current_user.is_following(user) %}
+                <p>
+                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                        {{form.hidden_tag()}}
+                        {{form.submit(value='关注')}}
+                    </form>
+                </p>
+                {% else %}
+                <p>
+                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                        {{form.hidden_tag()}}
+                        {{form.submit(value='取关')}}
+                    </form>
+                </p>
                 {% endif %}
             </td>
         </tr>

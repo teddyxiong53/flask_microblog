@@ -39,3 +39,6 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('该名字已经被占用了')
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField(label='提交')
