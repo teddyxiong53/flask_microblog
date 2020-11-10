@@ -1,36 +1,70 @@
-<html>
-    <head>
-        {% if title %}
-        <title>{{title}}</title>
-        {% else %}
-        <title>欢迎来到微博</title>
-        {% endif %}
-    </head>
-    <body>
-        <div>
-            microblog:
-            <a href="/index">首页</a>
-            <a href="/explore">浏览</a>
-            {% if current_user.is_anonymous %}
-            <a href="/login">登入</a>
-            {% else %}
-            <a href="{{ url_for('user', username=current_user.username) }}">我的主页</a>
-            <a href="/logout">登出</a>
-            {% endif %}
+{% extends "bootstrap/base.html" %}
 
+{% block title %}
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>欢迎来到microblog</title>
+    {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aira-expanded="false">
+                    <span class="sr-only">切换</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{{ url_for('index') }}" class="navbar-brand">microblog</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ url_for('index') }}">首页</a>
+                        <a href="{{ url_for('explore') }}">浏览</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+                    <li>
+                        <a href="{{ url_for('login') }}">登陆</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ url_for('user', username=current_user.username) }}">个人资料</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('logout') }}">退出</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
+
+    </nav>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+    <div class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul>
             {% for message in messages %}
-            <li>
+            <div class="alert alert-info" role="alert">
                 {{ message }}
-            </li>
+            </div>
             {% endfor %}
-        </ul>
         {% endif %}
         {% endwith %}
-        {% block content %}
+        {% block app_content %}
         {% endblock %}
-    </body>
-</html>
+    </div>
+
+{% endblock %}
+
