@@ -37,7 +37,7 @@ def index():
                 又送王孙去，萋萋满别情。"
         }
     ]
-    return render_template('index.html', title='home', user=user, posts=posts)
+    return render_template('index.html', title='首页', user=user, posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -57,7 +57,7 @@ def login():
             next_page = url_for('index')
 
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='登陆', form=form)
 
 @app.route('/logout')
 def logout():
@@ -91,7 +91,7 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
