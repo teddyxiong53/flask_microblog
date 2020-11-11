@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
+from flask import request
 
 
 
@@ -27,3 +28,11 @@ class PostForm(FlaskForm):
     post = TextAreaField(label='说点什么',validators=[DataRequired()])
     submit = SubmitField(label='发布')
 
+class SearchForm(FlaskForm):
+    q = StringField(label='搜索', validators=[DataRequired()])
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)

@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
-
+# print("MAIL_PORT:", os.environ.get('MAIL_PORT'))
+# print("MAIL_PASSWORD:", os.environ.get('MAIL_PASSWORD'))
 class Config():
     SECRET_KEY = os.environ.get('SECRET_KEY') or '123456'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
@@ -18,5 +19,5 @@ class Config():
     POSTS_PER_PAGE = 3
     LANGUAGES = ['en', 'cn']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
-
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
 

@@ -1,7 +1,7 @@
 from app import  db, get_locale
 from flask import render_template
 from flask import flash, redirect, url_for, request, g, jsonify, current_app
-from app.main.forms import  EditProfileForm, EmptyForm, PostForm
+from app.main.forms import  EditProfileForm, EmptyForm, PostForm, SearchForm
 from flask_login import current_user, login_user
 from app.models import User, Post
 from flask_login import logout_user, login_required
@@ -18,6 +18,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+        g.search_form = SearchForm()
     g.locale = str(get_locale())
 
 
@@ -145,3 +146,26 @@ def translate_text():
             request.form['dest_language']
         )
     })
+
+@bp.route('/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+    page = request.args.get('page', 1, type=int)
+    posts,total = Post.search(g.search_form.q.data, page,
+                              current_app.config['POSTS_PER_PAGE'])
+    if total> 1:
+        next_url = url_for('main.search', q=g.search_form.q.data, page=page+1)
+    else:
+        next_url = None
+    if page > 1:
+        prev_url = url_for('main.search', q=g.search_form.q.data, page=page-1)
+    else:
+        prev_url = None
+
+    return render_template('search.html',
+                           title='搜索',
+                           posts=posts,
+                           next_url=next_url,
+                           prev_url=prev_url)

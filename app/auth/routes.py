@@ -32,7 +32,7 @@ def login():
             next_page = url_for('main.index')
 
         return redirect(next_page)
-    return render_template('login.html', title='登陆', form=form)
+    return render_template('auth/login.html', title='登陆', form=form)
 
 @bp.route('/logout')
 def logout():
@@ -51,7 +51,7 @@ def register():
         db.session.commit()
         flash('恭喜你，注册成功')
         return redirect(url_for('auth.login'))
-    return render_template('register.html', title='注册', form=form)
+    return render_template('auth/register.html', title='注册', form=form)
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -65,7 +65,7 @@ def reset_password_request():
             send_password_reset_email(user)
         flash('邮件已经发送到你的邮箱，请检查你的邮箱')
         return redirect(url_for('auth.login'))
-    return render_template('reset_password_request.html',
+    return render_template('auth/reset_password_request.html',
                            title='重置密码', form=form)
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -81,4 +81,4 @@ def reset_password(token):
         db.session.commit()
         flash('密码重置成功')
         return redirect(url_for('auth.login'))
-    return render_template('reset_password.html', form=form)
+    return render_template('auth/reset_password.html', form=form)
