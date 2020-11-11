@@ -14,5 +14,6 @@ class Config():
     ADMINS = ['1073167306@qq.com']
     POSTS_PER_PAGE = 3
     LANGUAGES = ['en', 'cn']
+    MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
 
 
