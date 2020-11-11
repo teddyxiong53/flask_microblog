@@ -96,7 +96,7 @@ class User(UserMixin, db.Model):
         return url
 
     def follow(self, user):
-        if not self.if_following(user):
+        if not self.is_following(user):
             self.followed.append(user)
 
     def unfollow(self, user):
