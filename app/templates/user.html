@@ -20,19 +20,19 @@
                     你有{{user.followers.count()}}个关注者，关注了{{user.followed.count()}}人。
                 </p>
                 {% if current_user == user %}
-                <a href="{{ url_for('edit_profile') }}">
+                <a href="{{ url_for('main.edit_profile') }}">
                     编辑个人资料
                 </a>
                 {% elif not current_user.is_following(user) %}
                 <p>
-                    <form action="{{ url_for('follow', username=user.username) }}" method="post">
+                    <form action="{{ url_for('main.follow', username=user.username) }}" method="post">
                         {{form.hidden_tag()}}
                         {{form.submit(value='关注', class_='btn btn-default')}}
                     </form>
                 </p>
                 {% else %}
                 <p>
-                    <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
+                    <form action="{{ url_for('main.unfollow', username=user.username) }}" method="post">
                         {{form.hidden_tag()}}
                         {{form.submit(value='取关', class_='btn btn-default')}}
                     </form>

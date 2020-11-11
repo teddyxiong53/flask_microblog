@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-    <h1>Sign In</h1>
+    <h1>登陆</h1>
     <div class="row">
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}
@@ -9,11 +10,11 @@
     </div>
     <p>
         新用户？
-        <a href="{{ url_for('register') }}">点击注册</a>
+        <a href="{{ url_for('auth.register') }}">点击注册</a>
     </p>
     <p>
         忘记密码？
-        <a href="{{ url_for('reset_password_request') }}">
+        <a href="{{ url_for('auth.reset_password_request') }}">
             重置密码
         </a>
     </p>
