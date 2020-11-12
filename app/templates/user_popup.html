@@ -22,6 +22,7 @@
                     {{ user.followers.count() }}个关注者，关注了{{ user.followed.count() }}人
                 </p>
                 {% if current_user != user %}
+                {% if not current_user.is_following(user) %}
                 <p>
                     <form action="{{ url_for('main.follow', username=user.username) }}" method="post">
                         {{ form.hidden_tag() }}
@@ -35,6 +36,7 @@
                         {{ form.submit(value='取关', class_='btn btn-default btn-sm') }}
                     </form>
                 </p>
+                {% endif %}
                 {% endif %}
             </small>
         </td>
