@@ -17,7 +17,7 @@ class Config():
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['1073167306@qq.com']
     POSTS_PER_PAGE = 3
-    LANGUAGES = ['en', 'cn']
+    LANGUAGES = ['en', 'zh-CN']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
 
